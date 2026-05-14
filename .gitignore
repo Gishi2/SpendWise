@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Environment variables
+.env
+
+# Docker volumes
+pgdata/
+
+# Vite build output
+client/dist/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+#personal markdown files
+handoff.md

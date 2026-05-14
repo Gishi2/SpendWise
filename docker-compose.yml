@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: spendwise_db
+    restart: always
+    env_file:
+      - ./server/.env
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: spendwise
+      # POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./server/src/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # server:
+  #   build: ./server
+  #   container_name: spendwise_server
+  #   restart: always
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     PORT: 5000
+  #     DB_HOST: db
+  #     DB_PORT: 5432
+#     DB_USER: ${DB_USER}
+#     DB_PASSWORD: ${DB_PASSWORD}
+  #     DB_NAME: spendwise
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  #   volumes:
+  #     - ./server:/app
+  #     - /app/node_modules
+
+volumes:
+  pgdata:
