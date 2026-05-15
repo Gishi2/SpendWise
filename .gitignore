@@ -16,3 +16,10 @@ Thumbs.db
 
 #personal markdown files
 handoff.md
+
+# Firebase
+client/.firebase/
+client/.firebaserc
+client/firebase.json
+client/.env.production
+
